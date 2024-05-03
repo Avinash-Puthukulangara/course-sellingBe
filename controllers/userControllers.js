@@ -1,11 +1,16 @@
 const bcrypt = require('bcrypt')
 const generateToken = require('../utils/generateToken')
+const User = require('../models/userModel')
 
 const signup = async (req, res)=>{
-    const { firstName, lastName, password, email} = req.body
-    const userExist = await User.find({ email})
+    console.log('hitted signup')
     try {
-        if (userExist){
+        console.log(req.body)
+        const { firstName, lastName, password, email} = req.body
+
+        const userExist = await User.find({ email})
+
+        if (!userExist){
             return res.send('user already exist')
         }
     
@@ -16,8 +21,9 @@ const signup = async (req, res)=>{
             email,
             firstName,
             lastName,
-            hashPassword
+            hashPassword,
         })
+        console.log(newUser)
         if(!newUser) {
             return res.send("user not created")
         }
