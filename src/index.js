@@ -1,9 +1,11 @@
 const express = require('express')
 const app = express()
-const connectDb = require('./config/db')
+const connectDb = require('../config/db')
+const userRouter = require('../routes/index')
 const PORT = process.env.PORT
 
 
+app.use('/api/v1', userRouter)
 
 connectDb();
 
