@@ -6,11 +6,11 @@ const signup = async (req, res)=>{
     console.log('hitted signup')
     try {
         console.log(req.body)
-        const { firstName, lastName, password, email} = req.body
+        const { firstName, lastName, password, email } = req.body
 
-        const userExist = await User.find({ email})
+        const userExist = await User.findOne({ email })
 
-        if (!userExist){
+        if (userExist){
             return res.send('user already exist')
         }
     
@@ -23,7 +23,11 @@ const signup = async (req, res)=>{
             lastName,
             hashPassword,
         })
-        console.log(newUser)
+
+        const newUserCreated = await newUser.save()
+
+        console.log(newUserCreated)
+
         if(!newUser) {
             return res.send("user not created")
         }
@@ -36,10 +40,12 @@ const signup = async (req, res)=>{
         return res.send(error)
     }
 }
+
 const signin = async (req, res)=>{
+    console.log('hitted signin')
   try {
-    const {wmail, password} = req.body
-    const user = await User.findOne({email})
+    const {email, password} = req.body
+    const user = await User.findOne({ email })
     console.log(user)
 
     if (!user) {
@@ -54,8 +60,9 @@ const signin = async (req, res)=>{
     res.send(token)
 
   }
-      catch (error) {
+    catch (error) {
     console.log(error)
+    res.send(error)
   }
 }
 
