@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const connectDb = require('../config/db')
-const userRouter = require('../routes/index')
+const userRouter = require('../routes/userRoutes')
 const cookieParser = require('cookie-parser')
 require('dotenv').config()
 const PORT_URL = 2345
