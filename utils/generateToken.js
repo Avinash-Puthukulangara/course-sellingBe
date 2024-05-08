@@ -7,4 +7,10 @@ const generateToken = (email) =>{
     return jsonwebToken.sign({ data: email}, secretKey, { expiresIn: "1d"})
 }
 
-module.exports = generateToken
+const adminToken = (user) => {
+    return jsonwebToken.sign({ data: user.id, role: user.role }, secretKey, {
+      expiresIn: "1d",
+    });
+  };
+
+module.exports =  { generateToken, adminToken };
