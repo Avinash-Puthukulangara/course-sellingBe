@@ -26,8 +26,10 @@ const userSchema = new mongoose.Schema({
         minLength : 1,
         maxLength : 20,
     },
-
-});
+    courses : ({type : mongoose.Types.ObjectId, ref: 'Course'}),
+    },
+    {timestamps: true}
+);
 
 const User = mongoose.model('User', userSchema);
 
