@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
-const Instructor =require('../models/instructorModel')
-const adminToken = require('../utils/generateToken')
+const Instructor = require('../models/instructorModel');
+const { adminToken } = require('../utils/generateToken');
 
 const signup = async (req, res) => {
   try {
@@ -36,12 +36,12 @@ const signup = async (req, res) => {
 };
 
 const signin = async (req, res) => {
+  console.log('hitted signin')
   try {
     const body = req.body;
     const { email, password } = body;
-    console.log(body);
-
     const instructor = await Instructor.findOne({ email });
+    console.log(instructor);
 
     if (!instructor) {
       return res.send("instructor is not found");
@@ -58,20 +58,22 @@ const signin = async (req, res) => {
     }
 
     const token = adminToken(instructor);
-
+    console.log(token)
     res.cookie("token", token);
     res.json({ message: "Logged in!", token });
   } catch (error) {
     console.error("Error", error);
     res.status(500).send("Internal Server Error");
   }
-};
+}
 
-const getAllInstructors = async (req, res) => {
-  console.log("hitted intstrt get request")
+
+ const getAllInstructors = async (req, res) => {
   const instructors = await Instructor.find();
+  console.log('Retireved Instructors')
   return res.send(instructors);
 };
+
 
 const removeInstructor = async (req, res) => {
   const id = req.params.id;
@@ -83,10 +85,12 @@ const removeInstructor = async (req, res) => {
   const remove = await Instructor.deleteOne({ _id: id });
 
   if (!remove) {
+    console.log("failed to remove instructor!")
     return res.send("failed to remove");
   }
-
+  console.log("instructor removed")
   return res.send("removed sucessfully");
 };
+
 
 module.exports = { signup, signin, getAllInstructors, removeInstructor }

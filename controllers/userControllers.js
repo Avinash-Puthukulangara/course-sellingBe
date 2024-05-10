@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-const generateToken = require('../utils/generateToken')
+const { generateToken } = require('../utils/generateToken.js')
 const User = require('../models/userModel')
 
 const signup = async (req, res)=>{
@@ -32,12 +32,13 @@ const signup = async (req, res)=>{
             return res.send("user not created")
         }
         const token = generateToken(email)
-        res.send(token)
+        res.cookie("token", token);
+        res.send("Signed in successfully")
     
     } 
     catch (error) {
-        console.log(error)
-        return res.send(error)
+        console.log(error, "Something went wrong")
+        return res.status(500).send("Internal Server Error")
     }
 }
 
@@ -57,12 +58,14 @@ const signin = async (req, res)=>{
         return res.send("password incorrect")
     }
     const token = generateToken(email)
-    res.send(token)
+    console.log(token)
+    res.cookie("token", token);
+    res.send("Login successful")
 
   }
     catch (error) {
-    console.log(error)
-    res.send(error)
+    console.log(error, "Something went wrong")
+    return res.status(500).send("Internal Server Error")
   }
 }
 

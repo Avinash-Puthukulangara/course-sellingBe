@@ -13,12 +13,12 @@ const instructorSchema = new mongoose.Schema(
         },
         role: {
             type: String,
-            enum: ['instructor', 'admin']
+            enum: ["instructor", "admin"],
         },
         hashPassword: {
             type: String,
             required: true,
-            minLength: 8,
+            minlength: 8,
         },
         courses: [{ type: mongoose.Types.ObjectId, ref:'Course'}],
     },
