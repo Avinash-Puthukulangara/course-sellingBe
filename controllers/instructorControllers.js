@@ -19,7 +19,7 @@ const signup = async (req, res) => {
       name,
       email,
       hashPassword,
-      role: "instructor",
+      role: "admin",
     });
     const newInstructorCreated = await newInstructor.save();
 

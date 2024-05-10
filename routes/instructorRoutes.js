@@ -13,8 +13,8 @@ instructorRouter.post('/signup', authenticateInstructor, signup);
 instructorRouter.post('/signin', signin);
 
 
+instructorRouter.post("/add-courses", authenticateAdmin, upload.single("file"), createCourse);
 instructorRouter.get('/get-courses', getCourses);
-instructorRouter.post("/add-courses", authenticateAdmin, upload.single("image"), createCourse);
 instructorRouter.put('/update/:id', updateCourse);
 instructorRouter.delete('/delete/:id', deleteCourse);
 

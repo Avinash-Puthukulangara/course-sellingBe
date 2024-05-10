@@ -2,19 +2,18 @@ const cloudinaryInstance = require('../config/cloudinary.js')
 const Course = require('../models/courseModel.js')
 const Instructor = require('../models/instructorModel.js')
 
+
 const getCourses = async (req, res) => {
   const courses = await Course.find();
   res.send(courses).status(200);
 };
 
- const createCourse = async (req, res) => {
+const createCourse = async (req, res) => {
   try {
-    if (!req.file) {
-      return res
-        .status(400)
-        .json({ success: false, message: "No file uploaded" });
+    console.log("hitted");
+    if(!req.file) {
+    return res.send("file is not visible")
     }
-
     cloudinaryInstance.uploader.upload(req.file.path, async (err, result) => {
       if (err) {
         console.log(err, "error");
@@ -23,32 +22,29 @@ const getCourses = async (req, res) => {
           message: "Error",
         });
       }
-      console.log(result);
-
+      
       const imageUrl = result.url;
-
       const body = req.body;
-
       console.log(body, "body");
 
-      const { title, description, price, instructorEmail } = body;
+      const { title, description, price, instructorEmail } = req.body;
 
-      const findInstructor = await Instructor.find({ email: instructorEmail });
+      const findInstructor = await Instructor.findOne({ email: instructorEmail });
 
       if (!findInstructor) {
-        return res.send("please add instructor first").status(201);
+        return res.send("please add instructor first");
       }
 
-    const createCourse = new Course({
+      const createCourse = new Course({
         title,
         description,
         price,
-        instructor: findInstructor._id,
+        instructor: findInstructor.id,
         image: imageUrl,
       });
-
+      
+      
       const newCourseCreated = await createCourse.save();
-
       if (!newCourseCreated) {
         return res.send("course is not created");
       }
@@ -56,9 +52,10 @@ const getCourses = async (req, res) => {
     });
   } catch (error) {
     console.log("something went wrong", error);
-    res.send("failed to create course").status(201);
+    res.send("failed to create course");
   }
 };
+
 
  const updateCourse = async (req, res) => {
   const id = req.params.id;
