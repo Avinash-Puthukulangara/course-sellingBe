@@ -1,8 +1,8 @@
-const bcrypt = require('bcrypt')
-const { generateToken } = require('../utils/generateToken.js')
-const User = require('../models/userModel')
+import bcrypt from 'bcrypt';
+import { generateToken } from '../utils/generateToken.js';
+import User from '../models/userModel.js';
 
-const signup = async (req, res)=>{
+export const signup = async (req, res)=>{
     console.log('hitted signup')
     try {
         console.log(req.body)
@@ -32,6 +32,7 @@ const signup = async (req, res)=>{
             return res.send("user not created")
         }
         const token = generateToken(email)
+        console.log(email)
         res.cookie("token", token);
         res.send("Signed in successfully")
     
@@ -42,7 +43,7 @@ const signup = async (req, res)=>{
     }
 }
 
-const signin = async (req, res)=>{
+export const signin = async (req, res)=>{
     console.log('hitted signin')
   try {
     const {email, password} = req.body
@@ -69,5 +70,3 @@ const signin = async (req, res)=>{
   }
 }
 
-
-module.exports = { signup, signin}

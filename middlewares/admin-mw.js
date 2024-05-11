@@ -1,5 +1,6 @@
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
+dotenv.config();
 
 function authenticateAdmin(req, res, next) {
     const token = req.cookies.token;
@@ -19,5 +20,4 @@ function authenticateAdmin(req, res, next) {
       next();
     });
   }
-
-  module.exports = authenticateAdmin;
+export default authenticateAdmin;

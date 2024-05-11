@@ -1,9 +1,9 @@
-const express = require('express');
-const { getCourses, createCourse, updateCourse, deleteCourse } = require('../controllers/courseControllers.js');
-const { signup, signin, getAllInstructors, removeInstructor } = require('../controllers/instructorControllers.js')
-const upload = require('../middlewares/upload-mw.js')
-const authenticateInstructor = require('../middlewares/instructor-mw.js')
-const authenticateAdmin = require('../middlewares/admin-mw.js');
+import express from 'express';
+import { getCourses, createCourse, updateCourse, deleteCourse } from '../controllers/courseControllers.js';
+import { signup, signin, getAllInstructors, removeInstructor } from '../controllers/instructorControllers.js';
+import upload from '../middlewares/upload-mw.js';
+import authenticateInstructor from '../middlewares/instructor-mw.js';
+import authenticateAdmin from '../middlewares/admin-mw.js';
 
 
 
@@ -22,4 +22,4 @@ instructorRouter.delete('/delete/:id', deleteCourse);
 instructorRouter.get("/get-instructors", authenticateInstructor, getAllInstructors);
 instructorRouter.delete("/delete-instructors/:id", removeInstructor);
 
-module.exports = instructorRouter;
+export default instructorRouter;

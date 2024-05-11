@@ -1,14 +1,14 @@
-const cloudinaryInstance = require('../config/cloudinary.js')
-const Course = require('../models/courseModel.js')
-const Instructor = require('../models/instructorModel.js')
+import  cloudinaryInstance  from '../config/cloudinary.js';
+import Course from '../models/courseModel.js';
+import Instructor from '../models/instructorModel.js';
 
 
-const getCourses = async (req, res) => {
-  const courses = await Course.find();
+export const getCourses = async (req, res) => {
+  const courses = await find();
   res.send(courses).status(200);
 };
 
-const createCourse = async (req, res) => {
+export const createCourse = async (req, res) => {
   try {
     console.log("hitted");
     if(!req.file) {
@@ -29,7 +29,7 @@ const createCourse = async (req, res) => {
 
       const { title, description, price, instructorEmail } = req.body;
 
-      const findInstructor = await Instructor.findOne({ email: instructorEmail });
+      const findInstructor = await findOne({ email: instructorEmail });
 
       if (!findInstructor) {
         return res.send("please add instructor first");
@@ -57,13 +57,13 @@ const createCourse = async (req, res) => {
 };
 
 
- const updateCourse = async (req, res) => {
+export const updateCourse = async (req, res) => {
   const id = req.params.id;
   console.log(id);
 
   const { description, price, instructor } = req.body;
 
-  const updatedCourse = await Course.findOneAndUpdate(
+  const updatedCourse = await findOneAndUpdate(
     { _id: id },
     { description, price, instructor },
     {
@@ -79,10 +79,10 @@ const createCourse = async (req, res) => {
   return res.send(updatedCourse);
 };
 
- const deleteCourse = async (req, res) => {
+ export const deleteCourse = async (req, res) => {
   const id = req.params.id;
 
-  const deleteId = await Course.deleteOne({ _id: id });
+  const deleteId = await deleteOne({ _id: id });
 
   if (!deleteId) {
     return res.send("not deleted");
@@ -91,4 +91,3 @@ const createCourse = async (req, res) => {
 };
 
 
-module.exports = { getCourses, createCourse, updateCourse, deleteCourse }

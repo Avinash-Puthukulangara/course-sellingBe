@@ -1,11 +1,13 @@
-const express = require('express')
-const app = express()
-const connectDb = require('../config/db')
-const userRouter = require('../routes/userRoutes')
-const instructorRouter = require('../routes/instructorRoutes')
-const cookieParser = require('cookie-parser')
-require('dotenv').config()
-const PORT = 3500
+import express from 'express';
+import connectDb from '../config/db.js';
+import userRouter from '../routes/userRoutes.js';
+import instructorRouter from '../routes/instructorRoutes.js';
+import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+dotenv.config();
+
+
+const app = express();
 
 
 app.use(cookieParser())
@@ -13,7 +15,7 @@ app.use(express.json());
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/instructor', instructorRouter)
 
-
+const PORT = 3500
 connectDb();
 
 app.get('/', (req, res) => {

@@ -1,8 +1,8 @@
-const bcrypt = require('bcrypt');
-const Instructor = require('../models/instructorModel');
-const { adminToken } = require('../utils/generateToken');
+import bcrypt from "bcrypt";
+import Instructor from '../models/instructorModel.js';
+import  { adminToken } from '../utils/generateToken.js';
 
-const signup = async (req, res) => {
+export const signup = async (req, res) => {
   try {
     console.log(req.body);
 
@@ -19,7 +19,7 @@ const signup = async (req, res) => {
       name,
       email,
       hashPassword,
-      role: "admin",
+      role: "instructor",
     });
     const newInstructorCreated = await newInstructor.save();
 
@@ -35,7 +35,7 @@ const signup = async (req, res) => {
   }
 };
 
-const signin = async (req, res) => {
+export const signin = async (req, res) => {
   console.log('hitted signin')
   try {
     const body = req.body;
@@ -68,14 +68,14 @@ const signin = async (req, res) => {
 }
 
 
- const getAllInstructors = async (req, res) => {
+ export const getAllInstructors = async (req, res) => {
   const instructors = await Instructor.find();
   console.log('Retireved Instructors')
   return res.send(instructors);
 };
 
 
-const removeInstructor = async (req, res) => {
+export const removeInstructor = async (req, res) => {
   const id = req.params.id;
   console.log(id);
   const instructor = await Instructor.find({ _id: id });
@@ -92,5 +92,3 @@ const removeInstructor = async (req, res) => {
   return res.send("removed sucessfully");
 };
 
-
-module.exports = { signup, signin, getAllInstructors, removeInstructor }

@@ -1,20 +1,27 @@
-const jwt = require("jsonwebtoken");
-require('dotenv').config()
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 function authenticateUser(req, res, next) {
+  const secretKey = process.env.SECRET_KEY;
+
   const token = req.cookies.token;
-  console.log(token);
+  console.log(token)
 
-  jwt.verify(token, process.env.SE, (err, user) => {
-    console.log(err);
+  if (!token) {
+      return res.status(401).json({ message: 'No token provided. Unauthorized.' });
+  }
 
-    if (err) return res.sendStatus(403);
+  try {
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
 
-    req.user = user;
-    console.log(req.user.role);
-
-    next();
-  });
+      req.user = decoded.user;
+      
+      next();
+  } catch (error) {
+      return res.status(403).json({ message: 'Invalid token. Forbidden.' });
+  }
 }
 
-module.exports = authenticateUser;;
+
+export default authenticateUser;
