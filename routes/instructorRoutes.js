@@ -9,7 +9,7 @@ import authenticateAdmin from '../middlewares/admin-mw.js';
 
 const instructorRouter = express.Router();
 
-instructorRouter.post('/signup', authenticateInstructor, signup);
+instructorRouter.post('/signup',authenticateInstructor, signup);
 instructorRouter.post('/signin', signin);
 
 

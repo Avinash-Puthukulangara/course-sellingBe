@@ -19,7 +19,7 @@ export const signup = async (req, res) => {
       name,
       email,
       hashPassword,
-      role: "instructor",
+      role: 'instructor',
     });
     const newInstructorCreated = await newInstructor.save();
 

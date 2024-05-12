@@ -13,7 +13,8 @@ const instructorSchema = new mongoose.Schema(
         },
         role: {
             type: String,
-            enum: ["instructor", "admin"],
+            enum: ['instructor', 'admin'],
+            required: true,
         },
         hashPassword: {
             type: String,

@@ -2,8 +2,9 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
+const secretKey = process.env.SECRET_KEY;
+
 function authenticateUser(req, res, next) {
-  const secretKey = process.env.SECRET_KEY;
 
   const token = req.cookies.token;
   console.log(token)
@@ -13,7 +14,7 @@ function authenticateUser(req, res, next) {
   }
 
   try {
-      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      const decoded = jwt.verify(token, secretKey);
 
       req.user = decoded.user;
       

@@ -13,10 +13,18 @@ export const generateToken = (email) => {
     return jwt.sign({ data: email }, secretKey, { expiresIn: "1d" });
   };
   
-  export const adminToken = (user) => {
-    return jwt.sign({ data: user.id, role: user.role }, secretKey, {
-      expiresIn: "1d",
-    });
+
+ export const adminToken = (user) => {
+    const { id, role } = user;
+  
+  const payload = {
+    id: id,
+    role: role
+  };
+
+  const token = jwt.sign(payload, secretKey, { expiresIn: '1d' });
+
+  return token;
   };
 
 
