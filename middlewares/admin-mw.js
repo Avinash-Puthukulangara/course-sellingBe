@@ -2,10 +2,12 @@ import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
 dotenv.config();
 
+const secretKey = process.env.SECRET_KEY;
+
 function authenticateAdmin(req, res, next) {
     const token = req.cookies.token;
   
-    jwt.verify(token, process.env.SE, (err, user) => {
+    jwt.verify(token, secretKey, (err, user) => {
       console.log(err);
   
       if (err) return res.sendStatus(403);

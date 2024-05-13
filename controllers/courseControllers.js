@@ -4,7 +4,7 @@ import Instructor from '../models/instructorModel.js';
 
 
 export const getCourses = async (req, res) => {
-  const courses = await find();
+  const courses = await Course.find();
   res.send(courses).status(200);
 };
 
@@ -29,7 +29,8 @@ export const createCourse = async (req, res) => {
 
       const { title, description, price, instructorEmail } = req.body;
 
-      const findInstructor = await findOne({ email: instructorEmail });
+      const findInstructor = await Instructor.findOne({ email: instructorEmail });
+      console.log(findInstructor)
 
       if (!findInstructor) {
         return res.send("please add instructor first");
@@ -63,7 +64,7 @@ export const updateCourse = async (req, res) => {
 
   const { description, price, instructor } = req.body;
 
-  const updatedCourse = await findOneAndUpdate(
+  const updatedCourse = await Course.findOneAndUpdate(
     { _id: id },
     { description, price, instructor },
     {
@@ -82,7 +83,7 @@ export const updateCourse = async (req, res) => {
  export const deleteCourse = async (req, res) => {
   const id = req.params.id;
 
-  const deleteId = await deleteOne({ _id: id });
+  const deleteId = await Course.deleteOne({ _id: id });
 
   if (!deleteId) {
     return res.send("not deleted");
