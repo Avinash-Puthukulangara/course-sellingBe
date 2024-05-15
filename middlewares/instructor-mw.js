@@ -8,7 +8,7 @@ function authenticateInstructor(req, res, next){
       const token = req.cookies.token;
       console.log(token)
       
-      jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+      jwt.verify(token, secretKey, (err, user) => {
         console.log(err);
     
         if (err) return res.send("Token not valid or missing").status(403);

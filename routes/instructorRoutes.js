@@ -19,7 +19,7 @@ instructorRouter.put('/update/:id', updateCourse);
 instructorRouter.delete('/delete/:id', deleteCourse);
 
 
-instructorRouter.get("/get-instructors", authenticateInstructor, getAllInstructors);
+instructorRouter.get("/get-instructors", getAllInstructors);
 instructorRouter.delete("/delete-instructors/:id", removeInstructor);
 
 export default instructorRouter;

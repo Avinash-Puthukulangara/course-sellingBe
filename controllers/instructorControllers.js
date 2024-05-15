@@ -19,7 +19,7 @@ export const signup = async (req, res) => {
       name,
       email,
       hashPassword,
-      role: 'instructors',
+      role: 'instructor',
     });
     const newInstructorCreated = await newInstructor.save();
 
@@ -29,7 +29,7 @@ export const signup = async (req, res) => {
 
     const token = adminToken(newInstructorCreated);
     res.cookie("token", token);
-    res.json({ message: "signned in!", token });
+    res.json({ message: "signned in!"});
   } catch (error) {
     console.log(error, "Something wrong");
   }
@@ -60,7 +60,7 @@ export const signin = async (req, res) => {
     const token = adminToken(instructor);
     console.log(token)
     res.cookie("token", token);
-    res.json({ message: "Logged in!", token });
+    res.json({ message: "Logged in!"});
   } catch (error) {
     console.error("Error", error);
     res.status(500).send("Internal Server Error");
